@@ -120,11 +120,7 @@
                 <h4><b>REKAPTULASI PEMAKAI ALAT KONTRASEPSI DI INDONESIA</b></h4>
                 
               </center>
-                
-
-			
-            <!-- /.box-header -->
-			<br><br><br>
+	<br><br><br>
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
