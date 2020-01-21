@@ -115,7 +115,7 @@
           <div class="box">
             <div class="box-header">
               <center>
-                
+                <br><br>
                 <h4><b>BADAN KOORDINASI KELUARGA BERENCANA NASIONAL</b></h4>
                 <h4><b>REKAPTULASI PEMAKAI ALAT KONTRASEPSI DI INDONESIA</b></h4>
                 
@@ -124,18 +124,31 @@
 
 			
             <!-- /.box-header -->
-			
+			<br><br><br>
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
+				<style>
+				table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+				}
+				</style>
+				<table style="width:100%">
                         <tr>
-                          <th>Nama Provinsi</th>
-                          <th>Nama Kontrasepsi</th>
-                          <th>Jumlah Pemakai</th>
-                        </tr>
+						<th rowspan = "2"><center>Provinsi</th>
+						<th colspan="3"><center>Pemakai Alat Kontrasepsi</th>
+						<th rowspan = "2"><center>Jumlah</th>
+						</tr>
+						<tr>
+						
+						<td><center><b>Kondom</b></td>
+						<td><center><b>Pil</b></td>
+						<td><center><b>IUD</b></td>
+						
+						</tr>
 						
 						</thead> 
-						<tbody>
 					<?php
 
 						$host="localhost";
@@ -144,12 +157,8 @@
 						$database="db_keluarga_berencana";
 
 						$koneksi = mysqli_connect($host,$username,$passwords,$database) or die("tidak bisabter hubung ke database");
-            $query="SELECT c.nama_provinsi, a.nama_kontrasepsi, b.jumlah_pemakai, b.id_list
-            from list_kontrasepsi a
-            inner join list_pemakai_kontrasepsi b on b.id_kontrasepsi = a.id_kontrasepsi
-            inner join list_provinsi c on c.id_provinsi = b.id_provinsi
-            order by c.nama_provinsi, a.nama_kontrasepsi asc"
-            ;
+						$query="select distinct(list_provinsi.nama_provinsi) from list_pemakai_kontrasepsi
+								inner join list_provinsi on list_pemakai_kontrasepsi.id_provinsi=list_provinsi.id_provinsi";
 						$result=mysqli_query($koneksi,$query);
 
 
@@ -158,18 +167,56 @@
 						  while ($h = mysqli_fetch_array($result)) 
 						  {
 							extract($h);
+							$query1="select sum(list_pemakai_kontrasepsi.jumlah_pemakai) as jumlah_pemakai from list_pemakai_kontrasepsi
+											inner join list_provinsi on list_pemakai_kontrasepsi.id_provinsi=list_provinsi.id_provinsi
+											INNER JOIN list_kontrasepsi ON list_pemakai_kontrasepsi.id_kontrasepsi = list_kontrasepsi.id_kontrasepsi
+											where list_provinsi.nama_provinsi='$h[nama_provinsi]' and list_kontrasepsi.id_kontrasepsi=2";
+							$res=mysqli_query($koneksi,$query1);
+							while ($i = mysqli_fetch_array($res)) 
+							{
+							extract($i);
+							$query2="select sum(list_pemakai_kontrasepsi.jumlah_pemakai) as jumlah_pemakai from list_pemakai_kontrasepsi
+											inner join list_provinsi on list_pemakai_kontrasepsi.id_provinsi=list_provinsi.id_provinsi
+											INNER JOIN list_kontrasepsi ON list_pemakai_kontrasepsi.id_kontrasepsi = list_kontrasepsi.id_kontrasepsi
+											where list_provinsi.nama_provinsi='$h[nama_provinsi]' and list_kontrasepsi.id_kontrasepsi=1";
+							$res2=mysqli_query($koneksi,$query2);
+							while ($j = mysqli_fetch_array($res2)) 
+							{
+							extract($j);
+							$query3="select sum(list_pemakai_kontrasepsi.jumlah_pemakai) as jumlah_pemakai from list_pemakai_kontrasepsi
+											inner join list_provinsi on list_pemakai_kontrasepsi.id_provinsi=list_provinsi.id_provinsi
+											INNER JOIN list_kontrasepsi ON list_pemakai_kontrasepsi.id_kontrasepsi = list_kontrasepsi.id_kontrasepsi
+											where list_provinsi.nama_provinsi='$h[nama_provinsi]' and list_kontrasepsi.id_kontrasepsi=3";
+							$res3=mysqli_query($koneksi,$query3);
+							while ($k = mysqli_fetch_array($res3)) 
+							{
+							extract($k);
+							$query4="select sum(list_pemakai_kontrasepsi.jumlah_pemakai) as jumlah_pemakai from list_pemakai_kontrasepsi
+											inner join list_provinsi on list_pemakai_kontrasepsi.id_provinsi=list_provinsi.id_provinsi
+											INNER JOIN list_kontrasepsi ON list_pemakai_kontrasepsi.id_kontrasepsi = list_kontrasepsi.id_kontrasepsi
+											where list_provinsi.nama_provinsi='$h[nama_provinsi]'";
+							$res4=mysqli_query($koneksi,$query4);
+							while ($l = mysqli_fetch_array($res4)) 
+							{
+							extract($l);
+													
 							?>
 										<tr>
-                    <td><?php echo"$h[nama_provinsi]"; ?></td>
-										<td><?php echo"$h[nama_kontrasepsi]"; ?></td>
-										<td><?php echo"$h[jumlah_pemakai]"; ?></td>
+										<td><?php echo"$h[nama_provinsi]"; ?></td>
+										<td><center><?php echo"$i[jumlah_pemakai]"; ?></center></td>
+										<td><center><?php echo"$j[jumlah_pemakai]"; ?></center></td>
+										<td><center><?php echo"$k[jumlah_pemakai]"; ?></center></td>
+										<td><center><?php echo"$l[jumlah_pemakai]"; ?></center></td>
+										
 										</tr>
 									   <?php
 
 								  }
 								}
+						 }
+						 }}}
 								  ?>	
-								<!-- Akhir Kodingan tampilan data mahasiswa -->
+								  
 											
 					</tbody>
               </table>
