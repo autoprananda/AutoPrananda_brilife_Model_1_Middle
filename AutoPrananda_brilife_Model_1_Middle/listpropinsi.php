@@ -123,17 +123,6 @@
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
-                        <tr>
-                          <th>ID List</th>
-                          <th>Nama Provinsi</th>
-                          <th>Nama Kontrasepsi</th>
-                          <th>Jumlah Pemakai</th>
-                          <th style="text-align:center;">Aksi</th>
-                        </tr>
-						
-						</thead> 
-						<tbody>
-					<?php
             <div class="box-body">
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
